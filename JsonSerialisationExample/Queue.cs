@@ -27,7 +27,11 @@ namespace JsonSerialisationExample {
             var serialisedMessage = _q.Dequeue();
             var messageObject = (JObject)JsonConvert.DeserializeObject(serialisedMessage);
             var typeName = messageObject["MyType"].ToString();
+
+            // get type from string - may need to test types outside assembly
+            // http://stackoverflow.com/questions/12306/can-i-serialize-a-c-sharp-type-object
             var type = Type.GetType(typeName);
+
             var message = (MessageBase)messageObject.ToObject(type);
             return message;
         }
